@@ -22,7 +22,7 @@ export default class Row extends Component {
     return (
       <Wrapper>
         {
-          columns.map(({ name }) => (<Block>{rowData[name]}</Block>))
+          columns.map(({ name }) => (<Block key={name}>{rowData[name]}</Block>))
         }
       </Wrapper>
     );
