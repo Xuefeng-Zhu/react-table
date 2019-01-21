@@ -8,6 +8,7 @@ A simple data grid component for react. It supports
 * Sort individual column
 * Delete specific row
 * Reorder columns
+* Support edit cell
 
 ## Quick Start
 
