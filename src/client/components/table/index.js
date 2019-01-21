@@ -57,6 +57,14 @@ export default class Table extends Component {
     });
   }
 
+  handleEditCell = (rowData) => {
+    const { data } = this.state;
+
+    this.setState({
+      data: data.map(row => (row.id === rowData.id ? rowData : row))
+    });
+  }
+
   handleSortOnColumn = (columnName) => {
     let { data } = this.state;
     const { config } = this.state;
@@ -91,9 +99,22 @@ export default class Table extends Component {
     const { columns, config, data } = this.state;
     return (
       <Wrapper>
-        <Header columns={columns} config={config} onCellClicked={this.handleSortOnColumn} onCellReordered={this.handleReorderColumns} />
+        <Header
+          columns={columns}
+          config={config}
+          onCellClicked={this.handleSortOnColumn}
+          onCellReordered={this.handleReorderColumns}
+        />
         <Infinite containerHeight={500} elementHeight={33}>
-          {data.map(rowData => <Row key={rowData.id} columns={columns} rowData={rowData} onDeleteRow={this.handleDeleteRow} />)}
+          {data.map(rowData => (
+            <Row
+              key={rowData.id}
+              columns={columns}
+              rowData={rowData}
+              onDeleteRow={this.handleDeleteRow}
+              onEditCell={this.handleEditCell}
+            />
+          ))}
         </Infinite>
       </Wrapper>
     );

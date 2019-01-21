@@ -4,6 +4,7 @@
 
 A simple data grid component for react. It supports
 
+* Support large collection of data
 * Sort individual column
 * Delete specific row
 * Reorder columns
