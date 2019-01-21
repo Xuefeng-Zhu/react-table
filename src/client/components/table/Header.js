@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import _ from 'lodash';
 import { Icon } from 'antd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -83,7 +84,7 @@ export default class Header extends Component {
                       )}
                     >
                       <Block key={name} data-name={name} onClick={this.handleCellClick}>
-                        {name}
+                        {_.capitalize(name)}
                         {this.renderSort(name, sort)}
                       </Block>
                     </div>
