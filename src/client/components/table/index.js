@@ -57,11 +57,15 @@ export default class Table extends Component {
     });
   }
 
+  handleReorderColumns = (columns) => {
+    this.setState({ columns });
+  }
+
   render() {
     const { columns, config, data } = this.state;
     return (
       <Wrapper>
-        <Header columns={columns} config={config} onCellClicked={this.handleSortOnColumn} />
+        <Header columns={columns} config={config} onCellClicked={this.handleSortOnColumn} onCellReordered={this.handleReorderColumns} />
         {data.map((rowData, index) => <Row key={index} columns={columns} rowData={rowData} />)}
       </Wrapper>
     );
