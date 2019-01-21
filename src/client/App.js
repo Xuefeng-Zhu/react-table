@@ -19,13 +19,14 @@ const Title = styled.h2`
   color: white;
 `;
 export default class App extends Component {
-  state = {}
+  state = { loading: true }
 
   componentDidMount() {
     this.loadData();
   }
 
   loadData = (count = 100) => {
+    this.setState({ loading: true });
     fetch('/api/getTableData', {
       headers: {
         Accept: 'application/json',
@@ -35,11 +36,11 @@ export default class App extends Component {
       body: JSON.stringify({ count: _.toNumber(count) })
     })
       .then(res => res.json())
-      .then(res => this.setState(res));
+      .then(res => this.setState({ ...res, loading: false }));
   }
 
   render() {
-    const { columns, data } = this.state;
+    const { columns, data, loading } = this.state;
 
     return (
       <Layout>
@@ -56,7 +57,7 @@ export default class App extends Component {
             />
             )}
           >
-            {columns ? <Table columns={columns} data={data} /> : <Spin />}
+            {!loading ? <Table columns={columns} data={data} /> : <Spin />}
           </Card>
         </Content>
       </Layout>

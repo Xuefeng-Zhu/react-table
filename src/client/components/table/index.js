@@ -6,6 +6,8 @@ import _ from 'lodash';
 import Header from './Header';
 import Row from './Row';
 
+const Infinite = require('react-infinite');
+
 const processData = (rawData) => {
   if (!rawData.length) {
     return [];
@@ -90,7 +92,9 @@ export default class Table extends Component {
     return (
       <Wrapper>
         <Header columns={columns} config={config} onCellClicked={this.handleSortOnColumn} onCellReordered={this.handleReorderColumns} />
-        {data.map(rowData => <Row key={rowData.id} columns={columns} rowData={rowData} onDeleteRow={this.handleDeleteRow} />)}
+        <Infinite containerHeight={500} elementHeight={33}>
+          {data.map(rowData => <Row key={rowData.id} columns={columns} rowData={rowData} onDeleteRow={this.handleDeleteRow} />)}
+        </Infinite>
       </Wrapper>
     );
   }
