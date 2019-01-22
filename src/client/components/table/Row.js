@@ -20,11 +20,11 @@ const Wrapper = styled.div`
 
 const Block = styled.div`
   display: flex;
-  flex: 1;
+  flex:  ${props => props.width} 1 0%;
   align-items: center;
   justify-content: center;
   border: solid gray 1px;
-  padding: 5px;
+  padding: 5px 0;
 `;
 
 export default class Row extends Component {
@@ -63,7 +63,7 @@ export default class Row extends Component {
     });
   }
 
-  renderCell = (name, rowData) => {
+  renderCell = ({ name, width }, rowData) => {
     const { editingCell } = this.state;
     let content = rowData[name];
 
@@ -76,6 +76,7 @@ export default class Row extends Component {
         key={name}
         data-name={name}
         onDoubleClick={this.handleDoubleClickCell}
+        width={width}
       >
         {content}
       </Block>
@@ -88,7 +89,7 @@ export default class Row extends Component {
       <Wrapper>
         <Button type="danger" icon="close" style={{ position: 'absolute' }} onClick={this.handleDeleteRow} />
         {
-          columns.map(({ name }) => this.renderCell(name, rowData))
+          columns.map(column => this.renderCell(column, rowData))
         }
       </Wrapper>
     );

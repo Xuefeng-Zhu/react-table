@@ -5,9 +5,9 @@ import _ from 'lodash';
 import { Icon } from 'antd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const getItemStyle = (isDragging, draggableStyle) => ({
+const getItemStyle = (isDragging, draggableStyle, width) => ({
   userSelect: 'none',
-  flex: 1,
+  flex: width,
   background: isDragging ? 'lightgreen' : 'none',
   ...draggableStyle,
 });
@@ -24,7 +24,7 @@ const Block = styled.div`
   align-items: center;
   justify-content: center;
   border: solid gray 1px;
-  padding: 5px;
+  padding: 5px 0;
   cursor: pointer;
   font-weight: bold;
 `;
@@ -71,7 +71,7 @@ export default class Header extends Component {
               style={getListStyle(snapshot.isDraggingOver)}
               {...provided.droppableProps}
             >
-              {columns.map(({ name }, index) => (
+              {columns.map(({ name, width }, index) => (
                 <Draggable key={name} draggableId={name} index={index}>
                   {(provided, snapshot) => (
                     <div
@@ -80,7 +80,8 @@ export default class Header extends Component {
                       {...provided.dragHandleProps}
                       style={getItemStyle(
                         snapshot.isDragging,
-                        provided.draggableProps.style
+                        provided.draggableProps.style,
+                        width
                       )}
                     >
                       <Block key={name} data-name={name} onClick={this.handleCellClick}>

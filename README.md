@@ -9,6 +9,7 @@ A simple data grid component for react. It supports
 * Delete specific row
 * Reorder columns
 * Support edit cell
+* Auto size the column based on content
 
 ## Quick Start
 

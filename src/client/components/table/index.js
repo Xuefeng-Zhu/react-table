@@ -25,6 +25,31 @@ const processData = (rawData) => {
   return data;
 };
 
+const processColumns = (columns, data) => {
+  const columnSizes = {};
+
+  _.forEach(data[0], (value, name) => {
+    columnSizes[name] = 0;
+  });
+
+  _.forEach(data, (rowData) => {
+    _.forEach(rowData, (value, name) => {
+      columnSizes[name] += _.toString(value).length;
+    });
+  });
+
+  let sizeSum = 0;
+  _.forEach(columnSizes, (size, name) => {
+    columnSizes[name] = size / data.length;
+    sizeSum += columnSizes[name];
+  });
+
+  return columns.map(column => ({
+    ...column,
+    width: Math.max(_.floor((columnSizes[column.name] / sizeSum) * 100), 5)
+  }));
+};
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,17 +60,18 @@ const Wrapper = styled.div`
 export default class Table extends Component {
   constructor(props) {
     super(props);
+    const { columns, data } = props;
     this.state = {
       config: {},
-      columns: props.columns,
-      data: processData(props.data)
+      columns: processColumns(columns, data),
+      data: processData(data)
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps({ columns, data }) {
     this.setState({
-      columns: nextProps.columns,
-      data: processData(nextProps.data)
+      columns: processColumns(columns, data),
+      data: processData(data)
     });
   }
 
